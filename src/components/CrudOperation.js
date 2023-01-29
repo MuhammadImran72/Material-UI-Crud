@@ -128,6 +128,7 @@ const CrudOperation = () => {
               <TableRow>
                 <TableCell style={BoxStyle}>Status</TableCell>
                 <TableCell style={BoxStyle}>id</TableCell>
+                <TableCell style={BoxStyle}>Name</TableCell>
                 <TableCell style={BoxStyle}>Due By</TableCell>
                 <TableCell style={BoxStyle}>Start Date</TableCell>
                 <TableCell style={BoxStyle}>Completion Date</TableCell>
@@ -138,6 +139,9 @@ const CrudOperation = () => {
               <TableRow>
                 <TableCell style={BoxStyle}></TableCell>
                 <TableCell style={BoxStyle}>1207</TableCell>
+                <TableCell style={BoxStyle}>
+                  Decleration Certification
+                </TableCell>
                 <TableCell style={BoxStyle}>1/14/2023</TableCell>
                 <TableCell style={BoxStyle}>5/12/2023</TableCell>
                 <TableCell style={BoxStyle}>5/12/2023</TableCell>
@@ -146,6 +150,9 @@ const CrudOperation = () => {
               <TableRow>
                 <TableCell style={BoxStyle}></TableCell>
                 <TableCell style={BoxStyle}>1207</TableCell>
+                <TableCell style={BoxStyle}>
+                  Decleration Certification
+                </TableCell>
                 <TableCell style={BoxStyle}>1/14/2023</TableCell>
                 <TableCell style={BoxStyle}>5/12/2023</TableCell>
                 <TableCell style={BoxStyle}>5/12/2023</TableCell>

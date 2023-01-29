@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,7 +7,14 @@ import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import { NavLink } from "react-router-dom";
 
-const Registration = () => {
+const SignUp = () => {
+  const paperStyle = {
+    padding: 20,
+    height: "80vh",
+    width: 500,
+    margin: "0px auto",
+  };
+
   const captionStyle = { marginBottom: 35 };
   const fieldStyle = { marginBottom: 10, marginTop: 10 };
   const btnStyle = { marginBottom: 10, marginTop: 10 };
@@ -18,16 +25,24 @@ const Registration = () => {
   const [gender, setGender] = useState("");
   const [number, setNumber] = useState("");
 
-  const hanldesubmit = (e) => {
+  const HandleSubmit = (e) => {
     e.preventDefault();
-
-    // let regObj = { name, email, password, gender, number };
-    // console.log(regObj);
+    if (name === "") {
+      alert("Enter your name");
+    } else if (email === "") {
+    } else if (password === "") {
+    } else {
+      localStorage.setItem("name", name);
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+      localStorage.setItem("gender", gender);
+      localStorage.setItem("number", number);
+    }
   };
   return (
     <div>
       <Grid>
-        <Paper elevation={20}>
+        <Paper elevation={20} style={paperStyle}>
           <Grid align="center">
             <h2>Sign Up</h2>
             <Typography varient="caption" style={captionStyle}>
@@ -41,6 +56,7 @@ const Registration = () => {
               placeholder="Enter Your  Name"
               type="Text"
               value={name}
+              name={name}
               onChange={(e) => setName(e.target.value)}
               fullWidth
               variant="standard"
@@ -52,6 +68,7 @@ const Registration = () => {
               placeholder="Enter Your Email"
               type="email"
               value={email}
+              name={email}
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
               variant="standard"
@@ -89,6 +106,7 @@ const Registration = () => {
               placeholder="Enter Phone Number"
               type="password"
               value={number}
+              name={number}
               onChange={(e) => setNumber(e.target.value)}
               fullWidth
               variant="standard"
@@ -100,6 +118,7 @@ const Registration = () => {
               placeholder="Enter Your PassWord"
               type="password"
               value={password}
+              name={password}
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
               variant="standard"
@@ -107,15 +126,16 @@ const Registration = () => {
             />
 
             <Typography>
-              Already Have An Account ?<NavLink to="/">Sign In </NavLink>
+              Already Have An Account ?
+              <NavLink to="/userlogin">Sign In </NavLink>
             </Typography>
 
             <Button
               type="submit"
+              onClick={HandleSubmit}
               color="primary"
               variant="contained"
               style={btnStyle}
-              onSubmit={hanldesubmit}
               fullWidth
             >
               SIGN UP
@@ -126,5 +146,4 @@ const Registration = () => {
     </div>
   );
 };
-
-export default Registration();
+export default SignUp;
