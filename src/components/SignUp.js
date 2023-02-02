@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import Radio from "@mui/material/Radio";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const SignUp = () => {
   const paperStyle = {
@@ -22,26 +20,64 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
-  const [number, setNumber] = useState("");
+  const [dueby, setDueDates] = useState("");
+  const [pickdate, setDates] = useState(null);
+  const [tasks, setTasks] = useState("");
 
-  const HandleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  // function DatePick() {
+  //   return pickdate;
+  // }
+
+  // console.log(pickdate);
+
+  const IsValidate = () => {
+    let isproceed = true;
+    let errormessage = "Please Enter Your Values";
+
+    if (name === null || name === "") {
+      isproceed = false;
+      errormessage += "usernamessssSSSS";
+    }
+
+    if (email === null || email === "") {
+      isproceed = false;
+      errormessage += "E-Mail";
+    }
+
+    if (!isproceed) {
+      toast.warning(errormessage);
+    }
+    return isproceed;
+  };
+  const HandleSubmit = async (e) => {
+    debugger;
     e.preventDefault();
-    if (name === "") {
-      alert("Enter your name");
-    } else if (email === "") {
-    } else if (password === "") {
-    } else {
-      localStorage.setItem("name", name);
-      localStorage.setItem("email", email);
-      localStorage.setItem("password", password);
-      localStorage.setItem("gender", gender);
-      localStorage.setItem("number", number);
+
+    let users = { name, email, password, dueby, pickdate, tasks };
+    if (IsValidate()) {
+      // console.log(users);
+      fetch("http://localhost:3002/users", {
+        method: "POST",
+
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(users),
+      })
+        .then((res) => {
+          toast.success("Register Sucessfully");
+
+          navigate("/");
+        })
+        .catch((err) => {
+          toast.error("Failed : " + err.message);
+        });
     }
   };
   return (
     <div>
-      <Grid>
+      <Grid container spacing={2}>
+        <ToastContainer></ToastContainer>
         <Paper elevation={20} style={paperStyle}>
           <Grid align="center">
             <h2>Sign Up</h2>
@@ -75,39 +111,33 @@ const SignUp = () => {
               style={fieldStyle}
             />
 
-            <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label" fullWidth>
-                Gender
-              </FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
-                style={{ display: "initial" }}
-              >
-                <FormControlLabel
-                  value="female"
-                  defaultChecked={gender === "female"}
-                  onChange={(e) => setGender(e.target.value)}
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  defaultChecked={gender === "male"}
-                  onChange={(e) => setGender(e.target.value)}
-                  control={<Radio />}
-                  label="Male"
-                />
-              </RadioGroup>
-            </FormControl>
+            <TextField
+              type="date"
+              value={dueby}
+              name={dueby}
+              onChange={(e) => setDueDates(e.target.value)}
+              fullWidth
+              variant="standard"
+              style={fieldStyle}
+            />
+            <Typography>Start Date</Typography>
+            <TextField
+              type="date"
+              value={pickdate}
+              name={pickdate}
+              onChange={(e) => setDates(e.target.value)}
+              fullWidth
+              variant="standard"
+              style={fieldStyle}
+            />
 
             <TextField
-              label="Phone Number"
-              placeholder="Enter Phone Number"
-              type="password"
-              value={number}
-              name={number}
-              onChange={(e) => setNumber(e.target.value)}
+              label="Task"
+              placeholder="Enter Your Tasks"
+              type="number"
+              value={tasks}
+              name={tasks}
+              onChange={(e) => setTasks(e.target.value)}
               fullWidth
               variant="standard"
               style={fieldStyle}

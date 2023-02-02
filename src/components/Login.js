@@ -7,93 +7,119 @@ import {
   Typography,
   Link,
 } from "@mui/material";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
-  const paperStyle = {
-    padding: 20,
-    height: "80vh",
-    width: 500,
-    margin: "0px auto",
+  const LoginOuterBox = {
+    margin: "0 auto",
+    padding: "20px 20px",
   };
 
+  const paperStyle = {
+    padding: 20,
+
+    margin: "0px auto",
+  };
   const fieldStyle = { marginBottom: 20 };
   const btnStyle = { marginBottom: 10, marginTop: 10 };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [password, passwordupdate] = useState("");
   const naviagte = useNavigate();
 
-  const userEmail = localStorage.getItem("email")
-    ? localStorage.getItem("email")
-    : "admin@gmail.com";
-  const userPassword = localStorage.getItem("password")
-    ? localStorage.getItem("password")
-    : "12345";
-
-  const HandleSubmit = (e) => {
-    e.preventDeafult();
-    if (email === userEmail && password === userPassword) {
-      alert("Login Sucessfully ");
-      naviagte("/adduser");
-    } else {
-      alert("Invlaid Email Or Password");
+  const ProcedLogin = (e) => {
+    e.preventDefault();
+    if (validation()) {
+      fetch("http://localhost:3002/users" + name)
+        .then((res) => {
+          return res.json();
+        })
+        .then((resp) => {
+          console.log(resp);
+          if (Object.keys(resp).length === 0) {
+            toast.success("Login Successfully");
+            naviagte("/alluser");
+          } else {
+            if (resp.password === password) {
+              toast.success("Login Successfully");
+              naviagte("/alluser");
+            } else {
+              toast.error("Please Enter Correct Password For Login ");
+            }
+          }
+        })
+        .catch((err) => {
+          toast.error("Login Falied Due To :" + err.message);
+        });
     }
   };
 
+  const validation = () => {
+    let result = true;
+    if (name === "" || name === null) {
+      result = false;
+      toast.warning("Please Enter User Name");
+    }
+    if (password === "" || password === null) {
+      result = false;
+      toast.warning("Please Enter User Password");
+    }
+    return result;
+  };
+
   return (
-    <Grid>
-      <Paper elevation={10} style={paperStyle}>
-        <Grid align="center">
-          <h2> LogIn</h2>
-        </Grid>
-        <form>
-          <TextField
-            label="E-Mail Address"
-            placeholder="Enter Your E-Mail"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            variant="standard"
-            style={fieldStyle}
-          />
-          <TextField
-            label="Password "
-            placeholder="Enter Your PassWord"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            fullWidth
-            variant="standard"
-            style={fieldStyle}
-          />
-          <FormControlLabel
-            control={<Checkbox name="checkeddB" color="primary" />}
-            label="Remember Me"
-          />
+    <Grid container spacing={2}>
+      <ToastContainer></ToastContainer>
+      <Grid item xs={4} style={LoginOuterBox}>
+        <Paper elevation={10} style={paperStyle}>
+          <Grid align="center">
+            <h2> LogIn</h2>
+          </Grid>
+          <form>
+            <TextField
+              label="Name"
+              placeholder="Enter Your  Name"
+              type="Text"
+              value={name}
+              name={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              variant="standard"
+              style={fieldStyle}
+            />
+            <TextField
+              label="Password "
+              placeholder="Enter Your PassWord"
+              type="password"
+              name={password}
+              value={password}
+              onChange={(e) => passwordupdate(e.target.value)}
+              fullWidth
+              variant="standard"
+              style={fieldStyle}
+            />
 
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            onClick={HandleSubmit}
-            fullWidth
-            style={btnStyle}
-          >
-            SIGN IN
-          </Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              onClick={ProcedLogin}
+              fullWidth
+              style={btnStyle}
+            >
+              LogIn
+            </Button>
 
-          <Typography>
-            Do You Have Account ?
-            <Link href="#">
-              <NavLink to="/userregister"> Sign Up </NavLink>
-            </Link>
-          </Typography>
-        </form>
-      </Paper>
+            <Typography>
+              Do You Have Account ?
+              <Link href="#">
+                <NavLink to="/userregister"> Sign Up </NavLink>
+              </Link>
+            </Typography>
+          </form>
+        </Paper>{" "}
+      </Grid>
     </Grid>
   );
 };

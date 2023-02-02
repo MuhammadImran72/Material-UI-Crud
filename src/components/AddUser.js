@@ -18,8 +18,8 @@ const SpaceInputs = {
 };
 
 const intialValues = {
-  name: "",
-  startdate: "",
+  names: "",
+  email: "",
   number: "",
   password: "",
 };
@@ -40,7 +40,7 @@ const AddUser = () => {
     <FormGroup style={MainOuter}>
       <FormControl style={SpaceInputs}>
         <InputLabel>Name</InputLabel>
-        <Input name="name" onChange={(e) => onChangingValues(e)} />
+        <Input name="names" onChange={(e) => onChangingValues(e)} />
       </FormControl>
 
       <FormControl style={SpaceInputs}>

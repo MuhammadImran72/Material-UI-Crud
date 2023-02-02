@@ -1,39 +1,44 @@
 {
   "users": [
     {
-      "name": "maan",
-      "email": "maan@gmail.com",
-      "number": "0341538900",
-      "password": "54321",
+      "name": "neli",
+      "email": "neli@gmial.com",
+      "password": "12345",
+      "number": "54321555",
+      "pickdate": "2023-02-11",
       "id": 1
     },
     {
       "name": "buda",
-      "email": "johan@gmail.com",
-      "number": "0341538",
-      "password": "2323",
+      "email": "alikhan@gmial.com",
+      "password": "12345",
+      "number": "54321",
+      "pickdate": "2023-02-25",
       "id": 2
     },
     {
-      "name": "delay",
-      "email": "delay123@gmail.com",
-      "number": "0341538",
-      "password": "890",
+      "name": "mubeen",
+      "email": "mubeen@gmial.com",
+      "password": "12345",
+      "dueby": "2023-03-03",
+      "pickdate": "2023-02-05",
       "id": 3
     },
     {
-      "name": "johan",
-      "email": "johan@gmail.com",
-      "number": "0341538",
-      "password": "777656",
+      "name": "ali",
+      "email": "alikhan@gmial.com",
+      "password": "12345",
+      "dueby": "2023-12-02",
+      "pickdate": "2023-02-14",
       "id": 4
     },
     {
-      "name": "johan",
-      "startdate": "",
-      "number": "0341538",
-      "password": "56700",
-      "email": "johan@gmail.com",
+      "name": "asif",
+      "email": "asif@gmial.com",
+      "password": "12345",
+      "dueby": "2024-03-12",
+      "pickdate": "2023-02-05",
+      "tasks": "1",
       "id": 5
     }
   ]
